@@ -15,6 +15,7 @@ namespace ShauliBlog.Controllers
         {
             return View();
             Console.WriteLine();
+            //check for git
         }
 
         public IActionResult About()
