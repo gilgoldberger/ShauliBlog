@@ -1,0 +1,103 @@
+﻿/* Create & Edit */
+.control-label{
+    text-align: left;
+    float: left;
+    width: 90px;
+    line-height:20px;
+    padding:1px;
+}
+.control-label:after {
+    content: " :"
+}
+form input[type="text"]{
+	width: 300px;
+	height: 20px;
+    text-align: left;
+}
+.form-control{
+	width: 300px;
+	height: 20px;
+    text-align: left;
+}
+
+/* Delete & Details */
+dt {
+    font-weight: bold;
+    text-decoration: underline;
+    float: left;
+    clear: left;
+    width: 100px;
+    text-align: left;
+}
+dd {
+    margin: 0;
+    padding: 0 0 0.5em 0;
+}
+dt:after {
+    content: ": "
+}
+dl {
+    border: 3px double #ccc;
+    padding: 3em;
+}
+/* Chart */
+#chart rect {
+  fill: steelblue;
+}
+
+#chart text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
+}
+#chart{
+    font-size: 14px;
+}
+.bar {
+    fill: steelblue;
+}
+
+.bar:hover {
+    fill: brown;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.x.axis path {
+    display: none;
+}
+.chart .legend {
+  fill: black;
+  font: 14px sans-serif;
+  text-anchor: start;
+  font-size: 12px;
+}
+
+.chart text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
+}
+
+.chart .label {
+  fill: black;
+  font: 14px sans-serif;
+  text-anchor: end;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
