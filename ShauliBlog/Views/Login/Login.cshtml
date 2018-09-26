@@ -1,0 +1,36 @@
+﻿@model ClassExe3.Models.Account
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html>
+<head>
+    <link href="~/Content/ListStyle.css" rel="stylesheet" type="text/css" />
+    <title>Login</title>
+    <script type="text/javascript" src="~/Scripts/jquery-3.1.1.min.js"></script>
+</head>
+
+<body>
+    <div>
+        <!--Use 'Authenticate' function in the LoginController in order to validate user's identity-->
+        @using (Html.BeginForm("Authenticate", "Login", FormMethod.Post))
+        {
+            <table>
+                <tr>
+                    <td>User Name: </td>
+                    <td>@Html.TextBoxFor(model => model.AccountID)</td><td><div style="color:red">@Html.ValidationMessageFor(x => x.AccountID)</div></td>
+                </tr>
+                <tr>
+                    <td>Password: </td>
+                    <td>@Html.PasswordFor(model => model.Password)</td><td><div style="color:red">@Html.ValidationMessageFor(x => x.Password)</div></td>
+                </tr>
+                <tr>
+                    <td><input name="Submit" type="submit" id="submit" value="Login"/></td>
+                </tr>
+            </table>
+        }
+        <br/>
+    </div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+﻿@model IEnumerable<ClassExe3.Models.Post>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    IEnumerable<ClassExe3.Models.Post> MyPosts = ViewBag.Posts;
+
+    // Get the relevant values to the drop down list
+    List<SelectListItem> selectList = new List<SelectListItem>();
+    SelectListItem all = new SelectListItem();
+    all.Text = "All";
+    selectList.Add(all);
+    foreach (var p in MyPosts)
+    {
+        SelectListItem i = new SelectListItem();
+        i.Text = p.Title;
+        i.Value = p.PostID.ToString();
+        selectList.Add(i);
+    }
+}
+
+<head>
+    <link href="~/Content/ListStyle.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Show / Hide the search form - change the button's text according to the visibility of the form
+            $("button").click(function () {
+                var button = this
+                $('#searchform').slideToggle('slow', function () {
+                    if ($('#searchform').is(':visible')) {
+                        $("span", button).text("Hide search");
+                    } else {
+                        $("span", button).text("Show search");
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<h2>Posts:</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var post in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => post.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => post.Author)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = post.PostID }) |
+                @Html.ActionLink("Details", "Details", new { id = post.PostID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = post.PostID }) |
+                @Html.ActionLink("Manage", "Manage", new { id = post.PostID })
+            </td>
+        </tr>
+    }
+</table>
+<br />
+
+<p>
+    @Html.ActionLink("Add New Post", "Create", null, new { @class = "create-button" })
+</p>
+
+<button type="button" id="toggleButton"><span>Hide search</span></button>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "searchform" }))
+{
+    <p>
+        <h3>Search:</h3>
+        Post Title: @Html.DropDownList("postTitle", new SelectList(selectList, "Value", "Text"))<br />
+        Author: @Html.TextBox("Author") <br />
+        Comment's Author: @Html.TextBox("commentAuthor") <br />
+        Comment's Content: @Html.TextBox("commentContent") <br />
+        <input type="submit" value="Filter" id="search" />
+    </p>
+}
+

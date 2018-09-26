@@ -1,0 +1,98 @@
+﻿@model IEnumerable<ClassExe3.Models.CommentCityView>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <link href="~/Content/ListStyle.css" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8" />
+    <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
+    <script type="text/javascript">
+        var latitude = [];
+        var longtitude = [];
+        @{
+            for (int i = 0; i < ViewBag.latitude.Length; i++)
+            {
+                <text>latitude[@i] = "@ViewBag.latitude[@i]";</text>
+                <text>longtitude[@i] = "@ViewBag.longtitude[@i]";</text>
+            }
+        }
+
+        function GetMap()
+        {
+            var map = new Microsoft.Maps.Map('#myMap', {
+                credentials: 'Am_TaBTvt8df33MwwU4PcF8wBF56bxCVisy5SaOcFvcVSp2rYw0G-d1e6nGDSNUm'});
+            for (var i = 0; i < @ViewBag.latitude.Length; i++) {
+                // Create PushPins based on Fan's location
+                var pushpin = new Microsoft.Maps.Pushpin(map.getCenter(), null);
+                pushpin.setLocation(new Microsoft.Maps.Location(latitude[i],longtitude[i]));
+                map.entities.push(pushpin);
+            }
+        }   
+    </script>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=649618368542468";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+    <canvas id="myCanvas" width="430" height="70" style="border:0px;">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas>
+    <script>
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        ctx.font = "35px Arial";
+        ctx.strokeText("Welcome to Shauli's Blog!",5,40);
+    </script>
+    <p>
+        In my blog you will find Authors and Fans from all over the world! <br/>
+        In the following map, you might find the some pins which represent some of our fans location:
+    </p>
+    <div id="myMap" style='position:relative;width:600px;height:400px;'></div>
+    <br/>
+    <p>
+        The following table shows where the majority of our fans according to the number of their comments in the blog:
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(modelItem => modelItem.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(modelItem => modelItem.numOfComments)
+            </th>
+        </tr>
+        @{
+            foreach (var ccv in Model)
+            {
+                <tr>
+                    <td>
+                        @if (ccv.City == null || ccv.City.Equals(""))
+                        {
+                            @Html.Label("Other")
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => ccv.City)
+                        }        
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => ccv.numOfComments)
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <br/>
+    Did you liked us? Check our fan page on facebook
+    <br/><br/>
+    <div class="fb-page" data-href="https://www.ynet.co.il/home/0,7340,L-8,00.html" data-small-header="false" data-adapt-container-width="false" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/Shaulis-Blog-355852721418666/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Shaulis-Blog-355852721418666/">Shauli&#039;s Blog</a></blockquote></div>   
+</body>

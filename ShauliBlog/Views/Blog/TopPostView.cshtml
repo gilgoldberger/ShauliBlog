@@ -1,0 +1,25 @@
+﻿@model ClassExe3.Models.Post
+@{
+    ViewBag.Title = "TopPostView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript" src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#Refresh').click(function () {
+            $("#blogPost").load('@(Url.Action("UpdateTopPostView", "Blog", null, Request.Url.Scheme))');
+        });
+    });
+</script>
+<head>
+    <link href="~/Content/11.css" rel="stylesheet" type="text/css" />
+</head>
+<h2>Most Commented Post</h2><br />
+
+<article class="blogPost" id="blogPost">
+        @{Html.RenderPartial("PartialTopPostView", Model);}
+</article>
+<p>
+    @Html.ActionLink("Return", "BlogView")
+    <button type="button" id="Refresh">Refresh</button>
+</p>

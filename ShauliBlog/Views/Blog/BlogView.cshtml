@@ -1,0 +1,116 @@
+﻿@model IEnumerable<ClassExe3.Models.Post>
+
+@{
+    ViewBag.Title = "Welcome to the blog!";
+}
+
+<head>
+    <link href="~/Content/11.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            // Show / Hide the search form - change the button's text according to the visibility of the form
+            $('#toggleButton').click(function () {
+                var button = this
+                $('#search').slideToggle('slow', function () {
+                    if ($('#search').is(':visible')) {
+                        $("span", button).text("Hide search");
+                    } else {
+                        $("span", button).text("Show search");
+                    }
+                });
+            });
+        });
+        function postCount(number) {
+            // Create alert which tell how many posts written by this author
+            alert("The Author wrote " + number + " posts.");
+        }
+    </script>
+</head>
+
+@foreach (var post in Model)
+{
+    <section>
+        <article class="blogPost">
+            <header>
+                <h2>@post.Title</h2>
+                <p>Posted on <time datetime="DD-MM-YYYY">@post.PublishDate</time> by <a href="@post.Website">@post.Author</a> - <a href="#comments">@post.Comments.Count comments</a></p>
+            </header>
+            <div>
+                <p>@post.Content</p>
+                @if (post.Image != null)
+                {
+                    <img src=@post.Image />
+                }
+                @if (post.Video != null)
+                {
+                    <video controls="controls">
+                        <source src="@post.Video" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                }
+            </div>
+            <section id="comments">
+                <h3>Comments</h3>
+                @foreach (var comment in post.Comments)
+                {
+                    <article>
+                        <a onclick="postCount('@Html.Action("PostsNumber", "Blog", new { name = comment.Author })')">+ </a>
+                        <header>
+                            <a href="@comment.Website">@comment.Author</a>
+                        </header>
+                        <p>@comment.Content</p>
+                    </article>
+                }
+            </section>
+            @using (Html.BeginForm("AddComment", "Blog", FormMethod.Post))
+            {
+                <h3>Post a comment</h3>
+
+                    <input type="text" name="PostID" value="@post.PostID" style="display:none;">
+                    <p>
+                        <label for="Title">Title</label>
+                        <input name="Title" id="Title" type="text" required />
+                    </p>
+                    <p>
+                        <label for="Author">Author</label>
+                        <input name="Author" id="Author" type="text" required />
+                    </p>
+                    <p>
+                        <label for="Website">Website</label>
+                        <input name="Website" id="website" type="url" />
+                    </p>
+                    <p>
+                        <label for="City">City</label>
+                        <input name="City" id="city" type="text" required />
+                    </p>
+                    <p>
+                        <label for="Content">Content</label>
+                        <textarea name="Content" id="Content" required></textarea>
+                    </p>
+                    <p><input type="submit" value="Post comment" /></p>
+            }
+        </article>
+    </section>
+}
+
+<button type="button" id="toggleButton"><span>Hide search</span></button>
+<form method="Post" id="search">
+    <h4>Search Posts:</h4>
+    <table border=1>
+        <tr id="search-table">
+            <th>Author</th>
+            <th>Website</th>
+            <th>Free Search</th>
+            <th>Minimal comments</th>
+        </tr>
+        <tr>
+            <td><input type="text" name="author" id="search"></td>
+            <td><input type="text" name="website" id="search"></td>
+            <td><input type="text" name="freeSearch" id="search"></td>
+            <td><input type="range" name="numOfComments" min=0 max=10 value="0" id="search"></td>
+        </tr>
+    </table>
+    <input type="submit" value="submit" id="submit-button">
+</form>
+<br />

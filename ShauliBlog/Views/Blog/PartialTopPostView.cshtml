@@ -1,0 +1,28 @@
+﻿@model ClassExe3.Models.Post
+@{
+    Layout = null;
+}
+<head>
+    <link href="~/Content/11.css" rel="stylesheet" type="text/css" />
+</head>
+<header>
+    <h2>@Model.Title</h2>
+    <p>Posted on <time datetime="DD-MM-YYYY">@Model.PublishDate</time> by <a href="@Model.Website">@Model.Author</a> - <a>@Model.Comments.Count comments</a></p>
+</header>
+<div>
+    <p>@Model.Content</p>
+    @if (Model.Image != null)
+    {
+        <img src=@Model.Image />
+    }
+    @if (Model.Video != null)
+    {
+        <video controls="controls">
+            <source src="@Model.Video" type="video/mp4" />
+            Your browser does not support the video tag.
+        </video>
+    }
+</div>
+
+
+
