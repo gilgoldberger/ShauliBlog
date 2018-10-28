@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ShauliBlog.Models;
 
+
 namespace ShauliBlog.Controllers
 {
     public class HomeController : Controller
@@ -13,6 +14,7 @@ namespace ShauliBlog.Controllers
         public IActionResult Index()
         {
             return View();
+            Console.WriteLine();
         }
 
         public IActionResult About()
